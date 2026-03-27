@@ -1,0 +1,212 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Winn",
+  "scopeName": "source.winn",
+  "patterns": [
+    { "include": "#comment" },
+    { "include": "#string" },
+    { "include": "#number" },
+    { "include": "#atom" },
+    { "include": "#constant" },
+    { "include": "#module-definition" },
+    { "include": "#function-definition" },
+    { "include": "#keyword-control" },
+    { "include": "#keyword-definition" },
+    { "include": "#keyword-schema" },
+    { "include": "#keyword-query" },
+    { "include": "#keyword-logical" },
+    { "include": "#operator-pipe" },
+    { "include": "#operator-arrow" },
+    { "include": "#operator-comparison" },
+    { "include": "#operator-range" },
+    { "include": "#operator-concatenation" },
+    { "include": "#operator-arithmetic" },
+    { "include": "#operator-assignment" },
+    { "include": "#map-literal" },
+    { "include": "#module-name" },
+    { "include": "#function-call" },
+    { "include": "#block-params" },
+    { "include": "#wildcard" },
+    { "include": "#variable" }
+  ],
+  "repository": {
+    "comment": {
+      "name": "comment.line.number-sign.winn",
+      "match": "#.*$"
+    },
+
+    "string": {
+      "name": "string.quoted.double.winn",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.winn",
+          "match": "\\\\[nrt\\\\\"#]"
+        },
+        {
+          "begin": "#\\{",
+          "end": "\\}",
+          "beginCaptures": {
+            "0": { "name": "punctuation.section.interpolation.begin.winn" }
+          },
+          "endCaptures": {
+            "0": { "name": "punctuation.section.interpolation.end.winn" }
+          },
+          "name": "meta.interpolation.winn",
+          "contentName": "source.winn.embedded",
+          "patterns": [
+            { "include": "source.winn" }
+          ]
+        }
+      ]
+    },
+
+    "number": {
+      "patterns": [
+        {
+          "name": "constant.numeric.float.winn",
+          "match": "\\b\\d+\\.\\d+\\b"
+        },
+        {
+          "name": "constant.numeric.integer.winn",
+          "match": "\\b\\d+\\b"
+        }
+      ]
+    },
+
+    "atom": {
+      "name": "constant.other.symbol.winn",
+      "match": ":[a-zA-Z_][a-zA-Z0-9_]*"
+    },
+
+    "constant": {
+      "name": "constant.language.winn",
+      "match": "\\b(true|false|nil)\\b"
+    },
+
+    "module-definition": {
+      "match": "\\b(module)\\s+([A-Z][a-zA-Z0-9_]*(\\.[A-Z][a-zA-Z0-9_]*)*)\\b",
+      "captures": {
+        "1": { "name": "keyword.other.module.winn" },
+        "2": { "name": "entity.name.type.module.definition.winn" }
+      }
+    },
+
+    "function-definition": {
+      "match": "\\b(def)\\s+([a-z_][a-zA-Z0-9_]*[!?]?)",
+      "captures": {
+        "1": { "name": "keyword.other.def.winn" },
+        "2": { "name": "entity.name.function.winn" }
+      }
+    },
+
+    "keyword-control": {
+      "name": "keyword.control.winn",
+      "match": "\\b(if|else|unless|switch|when|match|ok|err|try|rescue|for|in|do|end|fn)\\b"
+    },
+
+    "keyword-definition": {
+      "name": "keyword.other.winn",
+      "match": "\\b(module|def|use|import|alias)\\b"
+    },
+
+    "keyword-schema": {
+      "name": "keyword.other.schema.winn",
+      "match": "\\b(schema|field|has_many|belongs_to|has_one|timestamps)\\b"
+    },
+
+    "keyword-query": {
+      "name": "keyword.other.query.winn",
+      "match": "\\b(from|where|order_by|limit|offset|preload)\\b"
+    },
+
+    "keyword-logical": {
+      "name": "keyword.operator.logical.winn",
+      "match": "\\b(and|or|not)\\b"
+    },
+
+    "operator-pipe": {
+      "name": "keyword.operator.pipe.winn",
+      "match": "\\|>"
+    },
+
+    "operator-arrow": {
+      "name": "keyword.operator.arrow.winn",
+      "match": "=>|\\->"
+    },
+
+    "operator-comparison": {
+      "name": "keyword.operator.comparison.winn",
+      "match": "==|!=|<=|>=|<|>"
+    },
+
+    "operator-range": {
+      "name": "keyword.operator.range.winn",
+      "match": "\\.\\."
+    },
+
+    "operator-concatenation": {
+      "name": "keyword.operator.concatenation.winn",
+      "match": "<>"
+    },
+
+    "operator-arithmetic": {
+      "name": "keyword.operator.arithmetic.winn",
+      "match": "[+\\-*/]"
+    },
+
+    "operator-assignment": {
+      "name": "keyword.operator.assignment.winn",
+      "match": "(?<![=!<>])=(?!=)"
+    },
+
+    "map-literal": {
+      "match": "%\\{",
+      "name": "punctuation.definition.map.begin.winn"
+    },
+
+    "module-name": {
+      "name": "entity.name.type.module.winn",
+      "match": "\\b[A-Z][a-zA-Z0-9_]*(\\.[A-Z][a-zA-Z0-9_]*)*\\b"
+    },
+
+    "function-call": {
+      "match": "\\b([a-z_][a-zA-Z0-9_]*[!?]?)\\s*(?=\\()",
+      "captures": {
+        "1": { "name": "entity.name.function.call.winn" }
+      }
+    },
+
+    "block-params": {
+      "begin": "(?<=do\\s)\\|",
+      "end": "\\|",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.parameters.begin.winn" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.parameters.end.winn" }
+      },
+      "patterns": [
+        {
+          "name": "variable.parameter.winn",
+          "match": "[a-z_][a-zA-Z0-9_]*"
+        },
+        {
+          "name": "punctuation.separator.winn",
+          "match": ","
+        }
+      ]
+    },
+
+    "wildcard": {
+      "name": "variable.language.wildcard.winn",
+      "match": "\\b_\\b"
+    },
+
+    "variable": {
+      "name": "variable.other.winn",
+      "match": "\\b[a-z_][a-zA-Z0-9_]*\\b"
+    }
+  }
+}

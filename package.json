@@ -1,0 +1,61 @@
+{
+  "name": "winn-lang",
+  "displayName": "Winn Language",
+  "description": "Syntax highlighting and diagnostics for the Winn programming language",
+  "version": "0.1.0",
+  "publisher": "gregwinn",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gregwinn/language-winn-vscode"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Programming Languages"],
+  "activationEvents": ["onLanguage:winn"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "winn",
+        "aliases": ["Winn", "winn"],
+        "extensions": [".winn"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "winn",
+        "scopeName": "source.winn",
+        "path": "./syntaxes/winn.tmLanguage.json"
+      }
+    ],
+    "configuration": {
+      "title": "Winn",
+      "properties": {
+        "winn.compilerPath": {
+          "type": "string",
+          "default": "winn",
+          "description": "Path to the winn compiler executable"
+        },
+        "winn.lintOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Run the Winn compiler on save to show diagnostics"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0",
+    "@vscode/vsce": "^2.22.0"
+  }
+}
