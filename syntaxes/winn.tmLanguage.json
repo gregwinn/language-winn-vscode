@@ -3,7 +3,9 @@
   "name": "Winn",
   "scopeName": "source.winn",
   "patterns": [
+    { "include": "#block-comment" },
     { "include": "#comment" },
+    { "include": "#triple-string" },
     { "include": "#string" },
     { "include": "#number" },
     { "include": "#atom" },
@@ -15,6 +17,7 @@
     { "include": "#keyword-schema" },
     { "include": "#keyword-query" },
     { "include": "#keyword-logical" },
+    { "include": "#operator-pipe-assign" },
     { "include": "#operator-pipe" },
     { "include": "#operator-arrow" },
     { "include": "#operator-comparison" },
@@ -30,9 +33,48 @@
     { "include": "#variable" }
   ],
   "repository": {
+    "block-comment": {
+      "name": "comment.block.winn",
+      "begin": "#\\|",
+      "end": "\\|#",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.comment.begin.winn" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.comment.end.winn" }
+      }
+    },
+
     "comment": {
       "name": "comment.line.number-sign.winn",
       "match": "#.*$"
+    },
+
+    "triple-string": {
+      "name": "string.quoted.triple.winn",
+      "begin": "\"\"\"",
+      "end": "\"\"\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.winn",
+          "match": "\\\\[nrt\\\\#]"
+        },
+        {
+          "begin": "#\\{",
+          "end": "\\}",
+          "beginCaptures": {
+            "0": { "name": "punctuation.section.interpolation.begin.winn" }
+          },
+          "endCaptures": {
+            "0": { "name": "punctuation.section.interpolation.end.winn" }
+          },
+          "name": "meta.interpolation.winn",
+          "contentName": "source.winn.embedded",
+          "patterns": [
+            { "include": "source.winn" }
+          ]
+        }
+      ]
     },
 
     "string": {
@@ -108,7 +150,7 @@
 
     "keyword-definition": {
       "name": "keyword.other.winn",
-      "match": "\\b(module|def|use|import|alias)\\b"
+      "match": "\\b(module|def|use|import|alias|struct|protocol|impl)\\b"
     },
 
     "keyword-schema": {
@@ -124,6 +166,11 @@
     "keyword-logical": {
       "name": "keyword.operator.logical.winn",
       "match": "\\b(and|or|not)\\b"
+    },
+
+    "operator-pipe-assign": {
+      "name": "keyword.operator.pipe-assign.winn",
+      "match": "\\|>="
     },
 
     "operator-pipe": {
