@@ -8,12 +8,14 @@ Syntax highlighting and compiler diagnostics for the [Winn programming language]
 
 Full TextMate grammar covering all Winn syntax:
 - Keywords (`module`, `def`, `end`, `if/else`, `switch`, `match`, `try/rescue`, `fn`, `for`)
+- Struct and protocol keywords (`struct`, `protocol`, `impl`)
 - String interpolation (`"Hello, #{name}!"`)
+- Triple-quoted strings (`"""..."""`)
+- Block comments (`#| ... |#`) and line comments (`# ...`)
 - Atoms (`:ok`, `:error`)
-- Operators (`|>`, `=>`, `<>`, `..`, `==`, etc.)
+- Operators (`|>`, `|>=`, `=>`, `<>`, `..`, `==`, etc.)
 - Module names, function definitions, function calls
 - Maps (`%{key: val}`), tuples, lists
-- Comments (`# comment`)
 - Block parameters (`do |x, acc| ... end`)
 
 ### Diagnostics (Linting)
@@ -25,6 +27,13 @@ Runs the Winn compiler on save and shows errors inline:
 - Transform and codegen errors
 
 Errors appear as red squigglies with messages in the Problems panel.
+
+### Language Features
+
+- Toggle block comments with `Ctrl+Shift+/`
+- Auto-close `#|` → `|#`
+- Folding for `module`, `def`, `struct`, `protocol`, `impl`, `do`, `if`, `switch`, `try`, `for`, `fn`
+- Smart indentation
 
 ## Requirements
 
